@@ -15,6 +15,7 @@ export async function POST() {
         await newConversation.save();
         return NextResponse.json({ _id: newConversation._id, conversationName: newConversation.conversationName, updatedAt: newConversation.updatedAt }, { status: 201 });
     } catch (error) {
+        console.log(error)
         return NextResponse.json({ error: "Failed to create conversation" }, { status: 500 });
     }
 }
@@ -28,6 +29,7 @@ export async function GET() {
         const conversations = await Conversation.find({ participantId: loggedUser._id }, '_id conversationName updatedAt').sort({ updatedAt: -1 });
         return NextResponse.json(conversations, { status: 200 });
     } catch (error) {
+        console.log(error)
         return NextResponse.json({ error: "Failed to fetch conversations" }, { status: 500 });
     }
 }

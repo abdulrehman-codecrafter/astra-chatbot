@@ -68,7 +68,7 @@ export default function ConversationsContextProvider({ children }) {
         user && fetchConversations();
     }, []);
 
-    console.log(state);
+
     return (
         <ConversationsContext.Provider value={{ ...state, dispatch }}>
             {children}

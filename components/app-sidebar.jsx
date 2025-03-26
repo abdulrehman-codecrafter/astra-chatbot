@@ -22,18 +22,18 @@ import { BlurFade } from "./magicui/blur-fade";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }) {
     const { conversations, loading, dispatch } = useConversationContext();
     const pathname = usePathname();
-    const [editingId, setEditingId] = useState<string | null>(null);
-    const [newName, setNewName] = useState<string>("");
+    const [editingId, setEditingId] = useState(null);
+    const [newName, setNewName] = useState("");
 
-    const handleEdit = (id: string, name: string) => {
+    const handleEdit = (id, name) => {
         setEditingId(id);
         setNewName(name);
     };
 
-    const handleSave = async (id: string) => {
+    const handleSave = async (id) => {
         try {
             const res = await axios.patch(`/api/conversations/${id}`, {
                 newName,
@@ -42,7 +42,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 type: "UPDATE_CONVERSATION",
                 payload: res.data.conversation,
             });
-        } catch (err) {}
+        } catch (err) {
+            console.log(err)
+        }
         setEditingId(null);
     };
 
@@ -82,7 +84,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             </div>
                         ) : (
                             <div>
-                                {conversations.map((item: any, idx: number) => {
+                                {conversations.map((item, idx) => {
                                     const isActive =
                                         pathname === `/chat/${item._id}`;
                                     return (

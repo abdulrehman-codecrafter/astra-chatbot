@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import Conversation from "../../../../models/conversation-modal"; // Ensure correct filename
 import dbConnect from "@/lib/mongodb";
-import { getLoggedUser } from "@/lib/getUser";
 
 export async function GET(req, { params }) {
     try {
