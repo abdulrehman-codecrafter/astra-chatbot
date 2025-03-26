@@ -9,3 +9,21 @@ export default function ChatLoader() {
         </div>
     );
 }
+
+export function ConversationLoader() {
+    return <div className="chaotic-orbit mt-1"></div>;
+}
+export function PreviousMessagesLoader() {
+    return (
+        <div className="loader">
+            <span>L</span>
+            <span>O</span>
+            <span>A</span>
+            <span>D</span>
+            <span>I</span>
+            <span>N</span>
+            <span>G</span>
+            
+        </div>
+    );
+}

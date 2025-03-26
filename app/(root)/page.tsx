@@ -2,8 +2,33 @@
 import { AuroraText } from "@/components/magicui/aurora-text";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import GetStartedButton from "@/components/get-started-btn";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import axios from "axios"
+import { useState } from "react";
+import { useConversationContext } from "@/contexts/conversationsContext";
+
 export default function Page() {
+    const router=useRouter()
+    const [loading,setLoading]=useState(false)
+    const {dispatch}=useConversationContext()
+
+    const startNewChat = async () => {
+        try {
+            setLoading(true)
+            const res = await axios.post("/api/conversations");
+            console.log(res.data)
+
+            if (res.data._id) {
+                console.log(res.data)
+                router.push(`/chat/${res.data._id}`); // Navigate to new chat
+                dispatch({type:"ADD_CONVERSATION",payload:res.data})
+            }
+        } catch (err) {
+            console.error("Error creating conversation:", err);
+        }finally{
+            setLoading(false)
+        }
+    };
     return (
         <div className="py-6 px-2 md:p-10 flex flex-col  h-full">
             <div>
@@ -21,9 +46,9 @@ export default function Page() {
                     />
                 </div>
             </div>
-            <Link href="/21312" className="flex justify-center mt-16">
-                <GetStartedButton />
-            </Link>
+            <div onClick={startNewChat} className="flex justify-center mt-16">
+                <GetStartedButton isLoading={loading}/>
+            </div>
         </div>
     );
 }
